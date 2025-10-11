@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Signal Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #2c3e50;
+            color: white;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            position: relative;
+        }
+        .road {
+            width: 30%;
+            height: 400px;
+            background: url('https://i.imgur.com/6hF3TUE.png') no-repeat center;
+            background-size: cover;
+            position: relative;
+            border: 2px solid white;
+            overflow: hidden;
+        }
+        .signal-box {
+            background-color: black;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px auto;
+            width: 80px;
+            text-align: center;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .signal {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 10px auto;
+            background-color: gray;
+        }
+        .red { background-color: red; }
+        .yellow { background-color: yellow; }
+        .green { background-color: green; }
+        .timer {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .car {
+            width: 150px; /* Increased car size */
+            position: absolute;
+            bottom: 20px;
+            left: -100px;
+            transition: transform 1s linear; /* Increased speed */
+        }
+    </style>
+</head>
+<body>
+    <h1>Traffic Signal Simulation</h1>
+    <label for="car_counts">Enter Car Counts (comma-separated):</label>
+    <input type="text" id="car_counts" value="2,4,1">
+    <button onclick="startSimulation()">Simulate</button>
+    
+    <div class="container">
+        <div class="road" id="road1">
+            <div class="signal-box">
+                <div class="signal red" id="signal1"></div>
+                <div class="timer" id="timer1">0</div>
+            </div>
+            <img src="/static/2.png" class="car" id="car1">
+        </div>
+        <div class="road" id="road2">
+            <div class="signal-box">
+                <div class="signal red" id="signal2"></div>
+                <div class="timer" id="timer2">0</div>
+            </div>
+            <img src="/static/2.png" class="car" id="car2">
+        </div>
+        <div class="road" id="road3">
+            <div class="signal-box">
+                <div class="signal red" id="signal3"></div>
+                <div class="timer" id="timer3">0</div>
+            </div>
+            <img src="/static/2.png" class="car" id="car3">
+        </div>
+    </div>
+   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    fetchCarCounts(); // Fetch car counts when page loads
+});
+
+// Function to fetch car counts from Flask backend
+function fetchCarCounts() {
+    fetch('/get_signal_times')
+        .then(response => response.json())
+        .then(data => {
+            let carCounts = data.signal_times || [0, 0, 0]; // Default if missing
+            document.getElementById('car_counts').value = carCounts.join(',');
+        })
+        .catch(error => console.error('Error fetching signal times:', error));
+}
+
+// Function to start the simulation
+function startSimulation() {
+    let carCounts = document.getElementById('car_counts').value.split(',').map(Number);
+    let signals = ["signal1", "signal2", "signal3"];
+    let timers = ["timer1", "timer2", "timer3"];
+    let cars = ["car1", "car2", "car3"];
+
+    function processSignal(index) {
+        if (index >= carCounts.length) return;
+
+        let duration = carCounts[index] * 2; // Faster transition
+        let signalId = signals[index];
+        let timerId = timers[index];
+        let carId = cars[index];
+
+        // Reset all signals to red and timers to 0
+        signals.forEach((sig, i) => {
+            document.getElementById(sig).classList.remove('green');
+            document.getElementById(sig).classList.add('red');
+            document.getElementById(timers[i]).innerText = "0";
+        });
+
+        let car = document.getElementById(carId);
+
+        // Stop car before signal turns green
+        car.style.transition = "transform 1s linear";
+        car.style.transform = "translateX(120px)";
+
+        setTimeout(() => {
+            document.getElementById(signalId).classList.remove('red');
+            document.getElementById(signalId).classList.add('green');
+
+            let countdown = duration;
+            document.getElementById(timerId).innerText = countdown;
+
+            let countdownInterval = setInterval(() => {
+                countdown--;
+                document.getElementById(timerId).innerText = countdown;
+                if (countdown <= 0) clearInterval(countdownInterval);
+            }, 1000);
+
+            // Move car when signal is green
+            setTimeout(() => {
+                car.style.transition = `transform ${duration - 1}s linear`;
+                car.style.transform = "translateX(300px)";
+            }, 1000);
+
+            // Blinking effect before turning red
+            setTimeout(() => {
+                let blinkCount = 3;
+                let blinkInterval = setInterval(() => {
+                    document.getElementById(signalId).classList.toggle('green');
+                    blinkCount--;
+                    if (blinkCount <= 0) clearInterval(blinkInterval);
+                }, 500);
+            }, (duration - 3) * 1000);
+
+            // Turn red and move to next signal
+            setTimeout(() => {
+                document.getElementById(signalId).classList.remove('green');
+                document.getElementById(signalId).classList.add('red');
+                processSignal(index + 1);
+            }, duration * 1000);
+        }, 1000); // Pause before green
+    }
+
+    processSignal(0);
+}
+
+    </script>
+</body>
+</html>
