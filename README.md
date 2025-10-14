@@ -74,4 +74,5 @@ API Response (JSON):
 (Each value represents the green signal duration for a lane based on vehicle count.)
 
 ![WhatsApp Image 2025-10-14 at 8 15 37 PM (1)](https://github.com/user-attachments/assets/446dd4d9-5bd6-4007-869c-67e6fac7dbbc)
+https://github.com/akshadamahadik/Eco-Traffic-A-Sustainable-Approach-to-Urban-Mobility/releases/tag/v1.0
 
