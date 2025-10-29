@@ -25,8 +25,8 @@ The Traffic Management System is a computer-vision-based web application that he
 
 --------------------------------------------
 <br>
-Traffic-Management-System/ 
-│
+Traffic-Management-System/ <br>
+│<br>
 ├── app.py                # Flask application to handle routes and backend logic<br>
 ├── capture.py            # Handles webcam image capture<br>
 ├── car_detection.py      # YOLO-based object detection module (custom)<br>
