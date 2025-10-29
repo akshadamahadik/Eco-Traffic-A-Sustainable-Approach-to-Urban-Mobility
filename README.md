@@ -24,7 +24,7 @@ The Traffic Management System is a computer-vision-based web application that he
 📂 **Project Structure**<br>
 
 --------------------------------------------
-
+<br>
 Traffic-Management-System/ 
 │
 ├── app.py                # Flask application to handle routes and backend logic<br>
