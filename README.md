@@ -38,6 +38,7 @@ Traffic-Management-System/ <br>
 │   └── *.jpg             # Captured images<br>
 └── README.md             # Project documentation<br>
 ------------------------------------------------------------------
+<br>
 🧠 **How It Works**
 
 1 Capture Phase (capture.py)
