@@ -1,9 +1,14 @@
-🚦 Traffic Management System
-📖 Overview
+🚦 Project Name- **Traffic Management System**<br>
+
+--------------------------------------
+
+📖 **Overview**
 
 The Traffic Management System is a computer-vision-based web application that helps manage traffic flow intelligently by analyzing live traffic camera feeds. It captures real-time images from a webcam, detects vehicles using an object detection model (YOLO), and dynamically adjusts signal timings based on vehicle density.
 
-🧩 Features
+------------------------------------
+
+🧩 **Features**
 
 🎥 Real-time Image Capture using the system webcam.
 
@@ -15,50 +20,53 @@ The Traffic Management System is a computer-vision-based web application that he
 
 ⚙️ Modular Design with separate files for capturing images and running detection.
 
-📂 Project Structure
-Traffic-Management-System/
+-------------------------------------
+📂 **Project Structure**<br>
+
+--------------------------------------------
+
+Traffic-Management-System/ 
 │
-├── app.py                # Flask application to handle routes and backend logic
-├── capture.py            # Handles webcam image capture
-├── car_detection.py      # YOLO-based object detection module (custom)
-├── templates/
-│   └── index.html        # Frontend HTML interface
-├── static/
-│   └── ...               # CSS, JS, and image assets
-├── images/
-│   └── *.jpg             # Captured images
-└── README.md             # Project documentation
-🧠 How It Works
+├── app.py                # Flask application to handle routes and backend logic<br>
+├── capture.py            # Handles webcam image capture<br>
+├── car_detection.py      # YOLO-based object detection module (custom)<br>
+├── templates/<br>
+│   └── index.html        # Frontend HTML interface<br>
+├── static/<br>
+│   └── ...               # CSS, JS, and image assets<br>
+├── images/<br>
+│   └── *.jpg             # Captured images<br>
+└── README.md             # Project documentation<br>
+------------------------------------------------------------------
+🧠 **How It Works**
 
-Capture Phase (capture.py)
+1 Capture Phase (capture.py)
 
-Opens the webcam and captures images in regular intervals.
+2 Opens the webcam and captures images in regular intervals.
 
-Saves them in the /images folder.
+3 Saves them in the /images folder.
 
-Detection Phase (car_detection.py)
+4 Detection Phase (car_detection.py)
 
-YOLO detects and counts vehicles in each image.
+5 YOLO detects and counts vehicles in each image.
 
-Returns the count of detected objects.
+6 Returns the count of detected objects.
 
-Decision Phase (app.py)
+7 Decision Phase (app.py)
 
-Flask receives detection results.
+8 Flask receives detection results.
 
-Computes total vehicle count per signal.
+9 Computes total vehicle count per signal.
 
-Returns optimized traffic signal timings.
+10 Returns optimized traffic signal timings.
 
-🛠️ Requirements
+--------------------------------------------------------------
+ **Requirements**
 
-Python 3.8+
-
-Flask
-
-OpenCV (cv2)
-
-YOLO model and dependencies (PyTorch or TensorFlow)
+- Python 3.8+
+- Flask
+- OpenCV (cv2)
+- YOLO model and dependencies (PyTorch or TensorFlow)
 
 Webcam
 
